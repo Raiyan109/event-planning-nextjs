@@ -1,6 +1,7 @@
 'use client'
 import { Plus } from "lucide"
 import Image from "next/image"
+import Link from "next/link";
 import { FaPlus } from "react-icons/fa";
 
 
@@ -12,15 +13,13 @@ const Home = () => {
                 <p className="text-center sm:text-left">  This is a simple event planner dashboard to help you planning your events</p>
 
                 <div className="flex gap-4 items-center flex-col sm:flex-row">
-                    <a
+                    <Link href="/add"
                         className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-6 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-                        href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-                        target="_blank"
-                        rel="noopener noreferrer"
+
                     >
                         <FaPlus />
                         Add Event
-                    </a>
+                    </Link>
                     <a
                         className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
                         href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"

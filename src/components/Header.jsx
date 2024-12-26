@@ -16,6 +16,9 @@ const Header = () => {
                     <li className="flex">
                         <Link href="/event-list" className="flex items-center px-4 -mb-1 border-b-2 dark:border-">All Events</Link>
                     </li>
+                    <li className="flex">
+                        <Link href="/manage" className="flex items-center px-4 -mb-1 border-b-2 dark:border-">Manage Events</Link>
+                    </li>
                 </ul>
 
             </div>

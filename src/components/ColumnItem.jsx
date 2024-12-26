@@ -1,12 +1,21 @@
 import { useSortable } from "@dnd-kit/sortable"
 import { CSS } from "@dnd-kit/utilities";
 
-const ColumnItem = ({ id, title, description, location, date, time }) => {
+const ColumnItem = ({ id, title, description, location, date, time, events, setEvents }) => {
     const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id });
 
     const removeEvent = (id) => {
         console.log(id);
+        // Filter the events to exclude the event with the given ID
+        const updatedEvents = events.filter((event) => event.id !== id);
 
+        // Update localStorage
+        localStorage.setItem("events", JSON.stringify(updatedEvents));
+
+        // Update the state
+        setEvents(updatedEvents);
+
+        alert("Event deleted successfully!");
         // const existingEvents = JSON.parse(localStorage.getItem("events")) || [];
         // const filtered = existingEvents.filter(item => item.id !== id);
         // localStorage.setItem('events', JSON.stringify(filtered));

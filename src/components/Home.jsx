@@ -2,7 +2,8 @@
 import { Plus } from "lucide"
 import Image from "next/image"
 import Link from "next/link";
-import { FaPlus } from "react-icons/fa";
+import { FaPlus, FaHeart } from "react-icons/fa";
+
 
 
 const Home = () => {
@@ -35,16 +36,12 @@ const Home = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                 >
-                    <Image
-                        aria-hidden
-                        src="/file.svg"
-                        alt="File icon"
-                        width={16}
-                        height={16}
+                    <FaHeart
+                        color="red"
                     />
-                    Learn
+                    Made by Raiyan
                 </a>
-                <a
+                {/* <a
                     className="flex items-center gap-2 hover:underline hover:underline-offset-4"
                     href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
                     target="_blank"
@@ -73,7 +70,7 @@ const Home = () => {
                         height={16}
                     />
                     Go to nextjs.org →
-                </a>
+                </a> */}
             </footer>
         </div>
     )

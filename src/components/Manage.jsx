@@ -34,7 +34,9 @@ const Manage = () => {
         }
     }
 
-    const sensors = useSensors(useSensor(PointerSensor), useSensor(TouchSensor), useSensor(KeyboardSensor, {
+    const sensors = useSensors(useSensor(PointerSensor, {
+        activationConstraint: { delay: 100 }
+    }), useSensor(TouchSensor), useSensor(KeyboardSensor, {
         coordinateGetter: sortableKeyboardCoordinates
     }))
     return (
@@ -42,7 +44,7 @@ const Manage = () => {
             <h1>Manage your events</h1>
 
             <DndContext onDragEnd={handleDragEnd} sensors={sensors} collisionDetection={closestCorners}>
-                <Column events={events} />
+                <Column events={events} setEvents={setEvents} />
             </DndContext>
         </div>
     )

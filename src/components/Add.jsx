@@ -33,8 +33,8 @@ const AddComponent = () => {
         const data = await res.json();
         console.log(data);
 
-        // localStorage.setItem("events", JSON.stringify([...existingEvents, formValues]));
-        // alert("Event saved successfully!");
+        localStorage.setItem("events", JSON.stringify([...existingEvents, formValues]));
+        alert("Event saved successfully!");
         setFormValues({
             title: "",
             description: "",
@@ -45,11 +45,13 @@ const AddComponent = () => {
         console.log(formValues);
 
     };
+
+
     return (
         <div className="flex items-center justify-center h-screen">
 
             <div className="w-96 rounded-2xl bg-white border border-gray-300 shadow-lg">
-                <h1 className="text-center text-2xl py-4">Add Event</h1>
+                <h1 className="text-center text-2xl py-4" >Add Event</h1>
                 <form className="flex flex-col gap-4 p-8" onSubmit={handleSubmit}>
                     <div>
                         <label>Title</label>

@@ -1,7 +1,9 @@
 'use client'
-import { closestCorners, DndContext } from "@dnd-kit/core"
+import { closestCorners, DndContext, KeyboardSensor, PointerSensor, TouchSensor, useSensor, useSensors } from "@dnd-kit/core"
 import Column from "./Column";
 import { useState } from "react";
+
+import { sortableKeyboardCoordinates } from "@dnd-kit/sortable";
 
 const generateUniqueId = () => Math.random().toString(36).substring(2, 9);
 const Manage = () => {
@@ -31,11 +33,15 @@ const Manage = () => {
             });
         }
     }
+
+    const sensors = useSensors(useSensor(PointerSensor), useSensor(TouchSensor), useSensor(KeyboardSensor, {
+        coordinateGetter: sortableKeyboardCoordinates
+    }))
     return (
         <div className="container mx-auto">
             <h1>Manage your events</h1>
 
-            <DndContext onDragEnd={handleDragEnd} collisionDetection={closestCorners}>
+            <DndContext onDragEnd={handleDragEnd} sensors={sensors} collisionDetection={closestCorners}>
                 <Column events={events} />
             </DndContext>
         </div>

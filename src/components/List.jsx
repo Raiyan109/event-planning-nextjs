@@ -12,27 +12,31 @@ import { createDragAndDropPlugin } from '@schedule-x/drag-and-drop'
 import { createEventModalPlugin } from '@schedule-x/event-modal'
 
 const List = () => {
+    const existingEvents = JSON.parse(localStorage.getItem("events")) || [];
+    // Helper to format date-time strings
+    const formatDateTime = (dateStr, time = "00:00") => {
+        const date = new Date(dateStr);
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day} ${time}`;
+    };
+
+    // Map events for the calendar
+    const mappedEvents = existingEvents.map((eventItem) => ({
+        id: Math.random().toString(36).substring(7), // Generate random ID
+        title: eventItem.title,
+        description: eventItem.description,
+        location: eventItem.location,
+        start: formatDateTime(eventItem.date, eventItem.time || "00:00"),
+        end: formatDateTime(eventItem.date, "01:00"),
+    }));
+
+
     const calendar = useCalendarApp({
         views: [createViewDay(), createViewWeek(), createViewMonthGrid(), createViewMonthAgenda()],
-        events: [
-            {
-                id: '1',
-                title: 'Event 1',
-                description: 'Event 1',
-                location: 'Pizza burg',
-                start: '2024-12-26 03:00',
-                end: '2024-12-26 04:00',
-            },
-            {
-                id: '2',
-                title: 'Event 2',
-                description: 'Event 2',
-                location: 'Pizza Hut',
-                start: '2024-12-27 12:00',
-                end: '2024-12-27 11:00',
-            },
-        ],
-        selectedDate: '2024-12-26',
+        events: mappedEvents,
+        selectedDate: new Date().toISOString().split('T')[0],
         plugins: [createDragAndDropPlugin(), createEventModalPlugin()]
     })
     return (

@@ -14,7 +14,7 @@ import { useEffect, useState } from "react"
 
 const List = () => {
     const [eventState, setEventState] = useState([]);
-    const existingEvents = JSON.parse(localStorage.getItem("events")) || [];
+    // const existingEvents = JSON.parse(localStorage.getItem("events")) || [];
     // useEffect(() => {
     //     if (typeof window !== "undefined") {
     //         const existingEvents = JSON.parse(localStorage.getItem("events")) || [];
@@ -47,20 +47,34 @@ const List = () => {
         return `${year}-${month}-${day} ${time}`;
     };
 
-    const mappedEvents = existingEvents.map((eventItem) => ({
-        id: Math.random().toString(36).substring(7),
-        title: eventItem.title,
-        description: eventItem.description,
-        location: eventItem.location,
-        start: formatDateTime(eventItem.date, eventItem.time || "00:00"),
-        end: formatDateTime(eventItem.date, "01:00"),
-    }));
-    console.log(mappedEvents);
+    // const mappedEvents = existingEvents.map((eventItem) => ({
+    //     id: Math.random().toString(36).substring(7),
+    //     title: eventItem.title,
+    //     description: eventItem.description,
+    //     location: eventItem.location,
+    //     start: formatDateTime(eventItem.date, eventItem.time || "00:00"),
+    //     end: formatDateTime(eventItem.date, "01:00"),
+    // }));
+    // console.log(mappedEvents);
 
 
     const calendar = useCalendarApp({
         views: [createViewDay(), createViewWeek(), createViewMonthGrid(), createViewMonthAgenda()],
-        events: mappedEvents,
+        // events: mappedEvents,
+        events: [
+            {
+                id: '1',
+                title: 'Event 1',
+                start: '2023-12-16',
+                end: '2023-12-16',
+            },
+            {
+                id: '2',
+                title: 'Event 2',
+                start: '2023-12-16 03:00',
+                end: '2023-12-16 05:00',
+            },
+        ],
         selectedDate: new Date().toISOString().split('T')[0],
         plugins: [createDragAndDropPlugin(), createEventModalPlugin()]
     })

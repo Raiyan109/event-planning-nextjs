@@ -3,15 +3,18 @@ import { closestCorners, DndContext } from "@dnd-kit/core"
 import Column from "./Column";
 import { useState } from "react";
 
-
+const generateUniqueId = () => Math.random().toString(36).substring(2, 9);
 const Manage = () => {
-    const [events, setEvents] = useState([
-        { id: 1, title: "Event 1" },
-        { id: 2, title: "Event 2" },
-        { id: 3, title: "Event 3" },
-        { id: 4, title: "Event 4" },
-        { id: 5, title: "Event 5" },
-    ]);
+    const existingEvents = JSON.parse(localStorage.getItem("events")) || [];
+
+    // Ensure each event has a unique ID
+    const initializedEvents = existingEvents.map((event) => ({
+        ...event,
+        id: event.id || generateUniqueId(),
+    }));
+
+    const [events, setEvents] = useState(initializedEvents);
+    console.log(events);
 
     const handleDragEnd = (event) => {
         const { active, over } = event;
@@ -20,8 +23,10 @@ const Manage = () => {
                 const oldIndex = events.findIndex((event) => event.id === active.id);
                 const newIndex = events.findIndex((event) => event.id === over.id);
                 const newEvents = [...events];
-                newEvents.splice(oldIndex, 1);
-                newEvents.splice(newIndex, 0, events[oldIndex]);
+                // newEvents.splice(oldIndex, 1);
+                // newEvents.splice(newIndex, 0, events[oldIndex]);
+                const [movedEvent] = newEvents.splice(oldIndex, 1);
+                newEvents.splice(newIndex, 0, movedEvent);
                 return newEvents;
             });
         }

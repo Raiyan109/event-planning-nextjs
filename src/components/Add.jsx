@@ -23,26 +23,26 @@ const AddComponent = () => {
     // Save to localStorage
     const handleSubmit = async (e) => {
         e.preventDefault(); // Prevent form submission default behavior
-        // const existingEvents = JSON.parse(localStorage.getItem("events")) || [];
-        // console.log(existingEvents);
-        // const res = await fetch(`/api/events`, {
-        //     method: "POST",
-        //     headers: { "Content-Type": "application/json" },
-        //     body: JSON.stringify({ formValues }),
-        // });
-        // const data = await res.json();
-        // console.log(data);
+        const existingEvents = JSON.parse(localStorage.getItem("events")) || [];
+        console.log(existingEvents);
+        const res = await fetch(`/api/events`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ formValues }),
+        });
+        const data = await res.json();
+        console.log(data);
 
-        // // localStorage.setItem("events", JSON.stringify([...existingEvents, formValues]));
-        // // alert("Event saved successfully!");
-        // setFormValues({
-        //     title: "",
-        //     description: "",
-        //     date: "",
-        //     time: "",
-        //     location: ""
-        // });
-        // console.log(formValues);
+        // localStorage.setItem("events", JSON.stringify([...existingEvents, formValues]));
+        // alert("Event saved successfully!");
+        setFormValues({
+            title: "",
+            description: "",
+            date: "",
+            time: "",
+            location: ""
+        });
+        console.log(formValues);
 
     };
     return (

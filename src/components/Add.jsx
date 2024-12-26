@@ -21,12 +21,19 @@ const AddComponent = () => {
     };
 
     // Save to localStorage
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault(); // Prevent form submission default behavior
         const existingEvents = JSON.parse(localStorage.getItem("events")) || [];
         console.log(existingEvents);
+        const res = await fetch(`/api/events`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify([...existingEvents, formValues]),
+        });
+        const data = await res.json();
+        console.log(data);
 
-        localStorage.setItem("events", JSON.stringify([...existingEvents, formValues]));
+        // localStorage.setItem("events", JSON.stringify([...existingEvents, formValues]));
         // alert("Event saved successfully!");
         setFormValues({
             title: "",

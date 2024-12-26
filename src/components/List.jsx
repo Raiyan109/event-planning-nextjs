@@ -48,7 +48,12 @@ const List = () => {
 
     return (
         <div>
-            <ScheduleXCalendar calendarApp={calendar} />
+            {/* Render the calendar only after eventState is populated */}
+            {eventState.length === 0 ? (
+                <div>Loading events...</div>
+            ) : (
+                <ScheduleXCalendar calendarApp={calendar} />
+            )}
         </div>
     )
 }

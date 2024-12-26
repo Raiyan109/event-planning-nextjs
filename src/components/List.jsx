@@ -14,12 +14,30 @@ import { useEffect, useState } from "react"
 
 const List = () => {
     const [eventState, setEventState] = useState([]);
+    const existingEvents = JSON.parse(localStorage.getItem("events")) || [];
+    // useEffect(() => {
+    //     if (typeof window !== "undefined") {
+    //         const existingEvents = JSON.parse(localStorage.getItem("events")) || [];
+    //         setEventState(existingEvents);
+    //     }
+    // }, []);
+
     useEffect(() => {
-        if (typeof window !== "undefined") {
-            const existingEvents = JSON.parse(localStorage.getItem("events")) || [];
-            setEventState(existingEvents);
+        const getEvents = async () => {
+            try {
+                const res = await fetch(`/api/events`, {
+                    method: "GET",
+                    headers: { "Content-Type": "application/json" },
+                });
+                const data = await res.json();
+                console.log(data.event);
+                setEventState(data.event);
+            } catch (error) {
+                console.log(error);
+            }
         }
-    }, []);
+        getEvents();
+    }, [])
 
     const formatDateTime = (dateStr, time = "00:00") => {
         const date = new Date(dateStr);
@@ -29,7 +47,7 @@ const List = () => {
         return `${year}-${month}-${day} ${time}`;
     };
 
-    const mappedEvents = eventState.map((eventItem) => ({
+    const mappedEvents = existingEvents.map((eventItem) => ({
         id: Math.random().toString(36).substring(7),
         title: eventItem.title,
         description: eventItem.description,
@@ -37,6 +55,7 @@ const List = () => {
         start: formatDateTime(eventItem.date, eventItem.time || "00:00"),
         end: formatDateTime(eventItem.date, "01:00"),
     }));
+    console.log(mappedEvents);
 
 
     const calendar = useCalendarApp({

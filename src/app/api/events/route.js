@@ -30,6 +30,23 @@ export async function POST(req) {
 
     } catch (error) {
         console.log(error);
+    }
+}
+
+export async function GET(req) {
+
+    // Connect to MongoDB
+    await connectToDatabase();
+    try {
+        const events = await EventModel.find();
+        console.log(events);
+        return NextResponse.json({
+            message: "Event saved successfully",
+            event: events
+        });
+
+    } catch (error) {
+        console.log(error);
 
     }
 

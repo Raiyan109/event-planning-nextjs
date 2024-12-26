@@ -1,5 +1,6 @@
 import { useSortable } from "@dnd-kit/sortable"
 import { CSS } from "@dnd-kit/utilities";
+import Link from "next/link";
 
 const ColumnItem = ({ id, title, description, location, date, time, events, setEvents }) => {
     const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id });
@@ -33,7 +34,10 @@ const ColumnItem = ({ id, title, description, location, date, time, events, setE
                     <h1>Location: {location}</h1>
                 </div>
 
-                <button onClick={() => removeEvent(id)} className="z-20 bg-red-500 p-3 rounded-md text-white">Delete</button>
+                <div className="flex gap-4">
+                    <Link href='/edit' className="z-20 bg-blue-500 p-2 rounded-md text-white">Update</Link>
+                    <button onClick={() => removeEvent(id)} className="z-20 bg-red-500 p-2 rounded-md text-white">Delete</button>
+                </div>
                 {/* <button
                     onClick={() => removeEvent(id)}
                     className="group relative flex h-14 w-14 flex-col items-center justify-center overflow-hidden rounded-xl border-2 border-red-800 bg-red-400 hover:bg-red-600"

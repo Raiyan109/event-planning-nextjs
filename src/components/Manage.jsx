@@ -41,7 +41,7 @@ const Manage = () => {
     }))
     return (
         <div className="container mx-auto">
-            <h1>Manage your events</h1>
+            <h1 className="text-center text-2xl py-4">Manage your events</h1>
 
             <DndContext onDragEnd={handleDragEnd} sensors={sensors} collisionDetection={closestCorners}>
                 <Column events={events} setEvents={setEvents} />

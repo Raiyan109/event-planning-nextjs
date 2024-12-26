@@ -28,7 +28,7 @@ const AddComponent = () => {
         const res = await fetch(`/api/events`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify([...existingEvents, formValues]),
+            body: JSON.stringify({ formValues }),
         });
         const data = await res.json();
         console.log(data);

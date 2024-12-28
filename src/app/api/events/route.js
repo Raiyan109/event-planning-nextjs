@@ -16,8 +16,10 @@ export async function POST(req) {
         const event = new EventModel({
             title: formValues.title,
             description: formValues.description,
-            date: formValues.date,
-            time: formValues.time,
+            startDate: formValues.startDate,
+            endDate: formValues.endDate,
+            startTime: formValues.startTime,
+            endTime: formValues.endTime,
             location: formValues.location
         });
 
@@ -39,10 +41,19 @@ export async function GET(req) {
     await connectToDatabase();
     try {
         const events = await EventModel.find();
-        console.log(events);
+
+        const formattedEvents = events.map(event => ({
+            id: event._id, // Assuming _id is the unique identifier
+            title: event.title,
+            description: event.description,
+            location: event.location,
+            start: `${event.startDate} ${event.startTime}`,
+            end: `${event.endDate} ${event.endTime}`,
+        }));
+
         return NextResponse.json({
             message: "Event saved successfully",
-            event: events
+            event: formattedEvents
         });
 
     } catch (error) {

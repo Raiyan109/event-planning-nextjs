@@ -6,8 +6,10 @@ const AddComponent = () => {
     const [formValues, setFormValues] = useState({
         title: "",
         description: "",
-        date: "",
-        time: "",
+        startDate: "",
+        endDate: "",
+        startTime: "",
+        endTime: "",
         location: "",
     });
 
@@ -24,7 +26,7 @@ const AddComponent = () => {
     const handleSubmit = async (e) => {
         e.preventDefault(); // Prevent form submission default behavior
         const existingEvents = JSON.parse(localStorage.getItem("events")) || [];
-        console.log(existingEvents);
+        console.log(formValues);
         const res = await fetch(`/api/events`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -33,13 +35,15 @@ const AddComponent = () => {
         const data = await res.json();
         console.log(data);
 
-        localStorage.setItem("events", JSON.stringify([...existingEvents, formValues]));
+        // localStorage.setItem("events", JSON.stringify([...existingEvents, formValues]));
         alert("Event saved successfully!");
         setFormValues({
             title: "",
             description: "",
-            date: "",
-            time: "",
+            startDate: "",
+            endDate: "",
+            startTime: "",
+            endTime: "",
             location: ""
         });
         console.log(formValues);
@@ -50,7 +54,7 @@ const AddComponent = () => {
     return (
         <div className="flex items-center justify-center h-screen">
 
-            <div className="w-96 rounded-2xl bg-white border border-gray-300 shadow-lg">
+            <div className="w-2/3 rounded-2xl bg-white border border-gray-300 shadow-lg">
                 <h1 className="text-center text-2xl py-4" >Add Event</h1>
                 <form className="flex flex-col gap-4 p-8" onSubmit={handleSubmit}>
                     <div>
@@ -70,18 +74,34 @@ const AddComponent = () => {
                             className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 focus:outline-none focus:ring-2 focus:ring-gray-700 focus:ring-offset-2 focus:ring-offset-gray-100" />
                     </div>
                     <div>
-                        <label>Date</label>
-                        <input placeholder="Event Date"
-                            name="date"
-                            value={formValues.date}
+                        <label>Start Date</label>
+                        <input placeholder="Event Start Date"
+                            name="startDate"
+                            value={formValues.startDate}
                             onChange={handleChange}
                             type="date" className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 focus:outline-none focus:ring-2 focus:ring-gray-700 focus:ring-offset-2 focus:ring-offset-gray-100" />
                     </div>
                     <div>
-                        <label>Time</label>
-                        <input placeholder="Event Time"
-                            name="time"
-                            value={formValues.time}
+                        <label>End Date</label>
+                        <input placeholder="Event End Date"
+                            name="endDate"
+                            value={formValues.endDate}
+                            onChange={handleChange}
+                            type="date" className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 focus:outline-none focus:ring-2 focus:ring-gray-700 focus:ring-offset-2 focus:ring-offset-gray-100" />
+                    </div>
+                    <div>
+                        <label>Start Time</label>
+                        <input placeholder="Event Start Time"
+                            name="startTime"
+                            value={formValues.startTime}
+                            onChange={handleChange}
+                            type="time" className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 focus:outline-none focus:ring-2 focus:ring-gray-700 focus:ring-offset-2 focus:ring-offset-gray-100" />
+                    </div>
+                    <div>
+                        <label>End Time</label>
+                        <input placeholder="Event End Time"
+                            name="endTime"
+                            value={formValues.endTime}
                             onChange={handleChange}
                             type="time" className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 focus:outline-none focus:ring-2 focus:ring-gray-700 focus:ring-offset-2 focus:ring-offset-gray-100" />
                     </div>

@@ -11,11 +11,19 @@ const eventSchema = new Schema({
         type: String,
         required: true
     },
-    date: {
-        type: Date,
+    startDate: {
+        type: String,
         required: true
     },
-    time: {
+    endDate: {
+        type: String,
+        required: true
+    },
+    startTime: {
+        type: String,
+        required: true
+    },
+    endTime: {
         type: String,
         required: true
     },
@@ -25,4 +33,4 @@ const eventSchema = new Schema({
     }
 }, { timestamps: true })
 
-export const EventModel = model('Plan', eventSchema)
+export const EventModel = model('Event', eventSchema)

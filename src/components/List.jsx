@@ -11,9 +11,11 @@ import '@schedule-x/theme-default/dist/calendar.css'
 import { createDragAndDropPlugin } from '@schedule-x/drag-and-drop'
 import { createEventModalPlugin } from '@schedule-x/event-modal'
 import { useEffect, useState } from "react"
+import { createEventsServicePlugin } from '@schedule-x/events-service'
 
 const List = () => {
     const [eventState, setEventState] = useState([]);
+    const eventsService = useState(() => createEventsServicePlugin())[0]
     const existingEvents = JSON.parse(localStorage.getItem("events")) || [];
     // useEffect(() => {
     //     if (typeof window !== "undefined") {
@@ -46,8 +48,9 @@ const List = () => {
         const day = String(date.getDate()).padStart(2, '0');
         return `${year}-${month}-${day} ${time}`;
     };
+console.log(eventState);
 
-    const mappedEvents = existingEvents.map((eventItem) => ({
+    const mappedEvents = eventState.map((eventItem) => ({
         id: Math.random().toString(36).substring(7),
         title: eventItem.title,
         description: eventItem.description,
@@ -76,17 +79,17 @@ const List = () => {
         //     },
         // ],
         selectedDate: new Date().toISOString().split('T')[0],
-        plugins: [createDragAndDropPlugin(), createEventModalPlugin()]
+        plugins: [createDragAndDropPlugin(), createEventModalPlugin(),eventsService]
     })
 
     return (
         <div>
             {/* Render the calendar only after eventState is populated */}
-            {/* {eventState.length === 0 ? (
+            {eventState.length === 0 ? (
                 <div>Loading events...</div>
-            ) : ( */}
+            ) : (
             <ScheduleXCalendar calendarApp={calendar} />
-            {/* )} */}
+            )}
         </div>
     )
 }

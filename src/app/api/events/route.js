@@ -87,3 +87,23 @@ export async function PUT(req) {
         return new Response(JSON.stringify({ error: "Failed to update event" }), { status: 500 });
     }
 }
+
+export async function DELETE(req) {
+    try {
+        await connectToDatabase();
+        const { id } = await req.json();
+
+        const deletedEvent = await EventModel.findByIdAndDelete(id);
+
+        if (!deletedEvent) {
+            return new Response(JSON.stringify({ error: "Event not found" }), { status: 404 });
+        }
+
+        return new Response(JSON.stringify({ message: "Event deleted successfully", event: deletedEvent }), {
+            status: 200,
+        });
+    } catch (error) {
+        console.error(error);
+        return new Response(JSON.stringify({ error: "Failed to delete event" }), { status: 500 });
+    }
+}

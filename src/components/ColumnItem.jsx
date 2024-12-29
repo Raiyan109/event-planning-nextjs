@@ -11,11 +11,32 @@ const ColumnItem = ({ id, title, description, location, start, end, events, setE
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [currentEvent, setCurrentEvent] = useState({});
 
-    const removeEvent = (id) => {
-        console.log(id);
-        const updatedEvents = events.filter((event) => event.id !== id);
-        setEvents(updatedEvents);
-        alert("Event deleted successfully!");
+    // const removeEvent = (id) => {
+    //     console.log(id);
+    //     const updatedEvents = events.filter((event) => event.id !== id);
+    //     setEvents(updatedEvents);
+    //     alert("Event deleted successfully!");
+    // };
+
+    const removeEvent = async () => {
+        try {
+            const res = await fetch(`/api/events`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ id }),
+            });
+            const data = await res.json();
+            alert("Event deleted successfully!");
+            // if (data.message === "Event updated successfully") {
+            //     updateEventInState(data.event);
+            //     closeModal();
+            //     alert("Event updated successfully!");
+            // }
+        } catch (error) {
+            console.error("Failed to update event", error);
+        }
     };
 
     const handleUpdateClick = () => {

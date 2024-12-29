@@ -16,7 +16,7 @@ import { createEventsServicePlugin } from '@schedule-x/events-service'
 const List = () => {
     const [eventState, setEventState] = useState([]);
     const eventsService = useState(() => createEventsServicePlugin())[0]
-    const existingEvents = JSON.parse(localStorage.getItem("events")) || [];
+    // const existingEvents = JSON.parse(localStorage.getItem("events")) || [];
     // useEffect(() => {
     //     if (typeof window !== "undefined") {
     //         const existingEvents = JSON.parse(localStorage.getItem("events")) || [];

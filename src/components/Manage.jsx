@@ -10,10 +10,12 @@ const Manage = () => {
     // const existingEvents = JSON.parse(localStorage.getItem("events")) || [];
     const [eventState, setEventState] = useState([]);
     const [events, setEvents] = useState([]);
+    const [isLoading, setIsLoading] = useState(false)
 
     useEffect(() => {
         const getEvents = async () => {
             try {
+                setIsLoading(true)
                 const res = await fetch(`/api/events`, {
                     method: "GET",
                     headers: { "Content-Type": "application/json" },
@@ -21,6 +23,7 @@ const Manage = () => {
                 const data = await res.json();
                 console.log(data.event);
                 setEventState(data.event);
+                setIsLoading(false)
             } catch (error) {
                 console.error(error);
             }
@@ -72,9 +75,9 @@ const Manage = () => {
         <div className="container mx-auto">
             <h1 className="text-center text-2xl py-4">Manage your events</h1>
 
-            <DndContext onDragEnd={handleDragEnd} sensors={sensors} collisionDetection={closestCorners}>
+            {isLoading ? <h1>Loading...</h1> : <DndContext onDragEnd={handleDragEnd} sensors={sensors} collisionDetection={closestCorners}>
                 <Column events={events} setEvents={setEvents} />
-            </DndContext>
+            </DndContext>}
         </div>
     )
 }

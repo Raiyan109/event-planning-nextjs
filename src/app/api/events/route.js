@@ -64,8 +64,26 @@ export async function GET(req) {
 }
 
 export async function PUT(req) {
-    return NextResponse.json({
-        message: "Event updated successfully",
-        // event: eventCreated
-    });
+    try {
+        await connectToDatabase();
+        const body = await req.json();
+        const { id, title, description, start, end, location } = body;
+
+        const updatedEvent = await EventModel.findByIdAndUpdate(
+            id,
+            { title, description, start, end, location },
+            { new: true } // Return the updated document
+        );
+
+        if (!updatedEvent) {
+            return new Response(JSON.stringify({ error: "Event not found" }), { status: 404 });
+        }
+
+        return new Response(JSON.stringify({ message: "Event updated successfully", event: updatedEvent }), {
+            status: 200,
+        });
+    } catch (error) {
+        console.error(error);
+        return new Response(JSON.stringify({ error: "Failed to update event" }), { status: 500 });
+    }
 }

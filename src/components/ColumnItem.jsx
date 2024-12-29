@@ -11,7 +11,7 @@ const ColumnItem = ({ id, title, description, location, date, time, events, setE
         const updatedEvents = events.filter((event) => event.id !== id);
 
         // Update localStorage
-        localStorage.setItem("events", JSON.stringify(updatedEvents));
+        // localStorage.setItem("events", JSON.stringify(updatedEvents));
 
         // Update the state
         setEvents(updatedEvents);

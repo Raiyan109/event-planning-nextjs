@@ -1,16 +1,35 @@
 'use client'
 import { closestCorners, DndContext, KeyboardSensor, PointerSensor, TouchSensor, useSensor, useSensors } from "@dnd-kit/core"
 import Column from "./Column";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { sortableKeyboardCoordinates } from "@dnd-kit/sortable";
 
 const generateUniqueId = () => Math.random().toString(36).substring(2, 9);
 const Manage = () => {
-    const existingEvents = JSON.parse(localStorage.getItem("events")) || [];
+    // const existingEvents = JSON.parse(localStorage.getItem("events")) || [];
+    const [eventState, setEventState] = useState([]);
+
+
+    useEffect(() => {
+        const getEvents = async () => {
+            try {
+                const res = await fetch(`/api/events`, {
+                    method: "GET",
+                    headers: { "Content-Type": "application/json" },
+                });
+                const data = await res.json();
+                console.log(data.event);
+                setEventState(data.event);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+        getEvents();
+    }, []);
 
     // Ensure each event has a unique ID
-    const initializedEvents = existingEvents.map((event) => ({
+    const initializedEvents = eventState.map((event) => ({
         ...event,
         id: event.id || generateUniqueId(),
     }));

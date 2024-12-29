@@ -1,8 +1,9 @@
 'use client'
 import { useState } from "react";
-
+import { useRouter } from 'next/navigation'
 
 const AddComponent = () => {
+    const router = useRouter()
     const [formValues, setFormValues] = useState({
         title: "",
         description: "",
@@ -25,7 +26,7 @@ const AddComponent = () => {
     // Save to localStorage
     const handleSubmit = async (e) => {
         e.preventDefault(); // Prevent form submission default behavior
-        const existingEvents = JSON.parse(localStorage.getItem("events")) || [];
+        // const existingEvents = JSON.parse(localStorage.getItem("events")) || [];
         console.log(formValues);
         const res = await fetch(`/api/events`, {
             method: "POST",
@@ -46,7 +47,7 @@ const AddComponent = () => {
             endTime: "",
             location: ""
         });
-        console.log(formValues);
+        router.push('/event-list')
 
     };
 

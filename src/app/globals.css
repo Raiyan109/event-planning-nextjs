@@ -27,3 +27,8 @@ body {
      max-height:90vh;
      padding: 14px 52px;
    } */
+
+.active {
+  color: #9b1414;
+  font-weight: bold;
+}

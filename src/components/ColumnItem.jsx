@@ -2,7 +2,7 @@ import { useSortable } from "@dnd-kit/sortable"
 import { CSS } from "@dnd-kit/utilities";
 import Link from "next/link";
 
-const ColumnItem = ({ id, title, description, location, date, time, events, setEvents }) => {
+const ColumnItem = ({ id, title, description, location, start, end, events, setEvents }) => {
     const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id });
 
     const removeEvent = (id) => {
@@ -29,8 +29,8 @@ const ColumnItem = ({ id, title, description, location, date, time, events, setE
                 <div>
                     <h1>Title: {title}</h1>
                     <h1>Description: {description}</h1>
-                    <h1>Date: {date}</h1>
-                    <h1>Time: {time}</h1>
+                    <h1>Start: {start}</h1>
+                    <h1>End: {end}</h1>
                     <h1>Location: {location}</h1>
                 </div>
 

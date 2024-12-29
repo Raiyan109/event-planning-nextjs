@@ -9,7 +9,7 @@ const generateUniqueId = () => Math.random().toString(36).substring(2, 9);
 const Manage = () => {
     // const existingEvents = JSON.parse(localStorage.getItem("events")) || [];
     const [eventState, setEventState] = useState([]);
-
+    const [events, setEvents] = useState([]);
 
     useEffect(() => {
         const getEvents = async () => {
@@ -29,12 +29,22 @@ const Manage = () => {
     }, []);
 
     // Ensure each event has a unique ID
-    const initializedEvents = eventState.map((event) => ({
-        ...event,
-        id: event.id || generateUniqueId(),
-    }));
+    // const initializedEvents = eventState.map((event) => ({
+    //     ...event,
+    //     id: event.id || generateUniqueId(),
+    // }));
+    // Populate `events` when `eventState` is updated
+    useEffect(() => {
+        if (eventState.length > 0) {
+            const initializedEvents = eventState.map((event) => ({
+                ...event,
+                id: event.id || generateUniqueId(),
+            }));
+            setEvents(initializedEvents);
+        }
+    }, [eventState]);
 
-    const [events, setEvents] = useState(initializedEvents);
+
     console.log(events);
 
     const handleDragEnd = (event) => {

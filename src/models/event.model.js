@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import { Schema, model, models } from "mongoose";
 
 
 
@@ -33,4 +33,4 @@ const eventSchema = new Schema({
     }
 }, { timestamps: true })
 
-export const EventModel = model('Event', eventSchema)
+export const EventModel = models.Event || model("Event", eventSchema);

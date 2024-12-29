@@ -1,9 +1,12 @@
 'use client'
 
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const Edit = () => {
+    const [eventState, setEventState] = useState([]);
+    const [isLoading, setIsLoading] = useState(false)
+
     const router = useRouter()
     const [formValues, setFormValues] = useState({
         title: "",
@@ -14,6 +17,25 @@ const Edit = () => {
         endTime: "",
         location: "",
     });
+
+    useEffect(() => {
+        const getEvents = async () => {
+            try {
+                setIsLoading(true)
+                const res = await fetch(`/api/events`, {
+                    method: "GET",
+                    headers: { "Content-Type": "application/json" },
+                });
+                const data = await res.json();
+                console.log(data.event);
+                setEventState(data.event);
+                setIsLoading(false)
+            } catch (error) {
+                console.error(error);
+            }
+        };
+        getEvents();
+    }, []);
 
     // Handle input changes
     const handleChange = (e) => {
@@ -30,9 +52,9 @@ const Edit = () => {
         // const existingEvents = JSON.parse(localStorage.getItem("events")) || [];
         console.log(formValues);
         const res = await fetch(`/api/events`, {
-            method: "POST",
+            method: "PUT",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ formValues }),
+            // body: JSON.stringify({ formValues }),
         });
         const data = await res.json();
         console.log(data);
@@ -55,7 +77,7 @@ const Edit = () => {
         <div className="container mx-auto">
             <div className="flex items-center justify-center h-screen">
                 <div className="w-2/3 rounded-2xl bg-white border border-gray-300 shadow-lg">
-                    <h1 className="text-center text-2xl py-4" >Add Event</h1>
+                    <h1 className="text-center text-2xl py-4" >Update Event</h1>
                     <form className="flex flex-col gap-4 p-8" onSubmit={handleSubmit}>
                         <div>
                             <label>Title</label>

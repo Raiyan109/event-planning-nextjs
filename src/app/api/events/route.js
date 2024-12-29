@@ -62,3 +62,10 @@ export async function GET(req) {
     }
 
 }
+
+export async function PUT(req) {
+    return NextResponse.json({
+        message: "Event updated successfully",
+        // event: eventCreated
+    });
+}

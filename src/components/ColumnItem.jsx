@@ -27,13 +27,15 @@ const ColumnItem = ({ id, title, description, location, start, end, events, setE
                 },
                 body: JSON.stringify({ id }),
             });
-            const data = await res.json();
-            alert("Event deleted successfully!");
-            // if (data.message === "Event updated successfully") {
-            //     updateEventInState(data.event);
-            //     closeModal();
-            //     alert("Event updated successfully!");
-            // }
+            if (res.ok) {
+                const data = await res.json();
+                // Update the UI by removing the deleted event
+                const updatedEvents = events.filter((event) => event.id !== id);
+                setEvents(updatedEvents); // Update the state
+                alert(data.message || "Event deleted successfully!");
+            } else {
+                alert("Failed to delete event.");
+            }
         } catch (error) {
             console.error("Failed to update event", error);
         }
